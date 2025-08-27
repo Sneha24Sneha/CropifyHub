@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Convert Image</title>
+</head>
+<body>
+  <h2>Convert Image Format</h2>
+
+  <form method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" required><br><br>
+
+    <label>Select Format:</label>
+    <select name="format" required>
+      <option value="jpg">JPG</option>
+      <option value="png">PNG</option>
+      <option value="webp">WEBP</option>
+      <option value="bmp">BMP</option>
+      <option value="tiff">TIFF</option>
+    </select><br><br>
+
+    <button type="submit">Convert & Download</button>
+  </form>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<h2>Create Thumbnail</h2>
+<form id="thumbForm" method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" id="imageInput" required>
+    <button type="submit">Generate Thumbnail</button>
+</form>
+
+<!-- Image preview -->
+<img id="preview" style="max-width:100%; display:none;" />
+
+<!-- Thumbnail result -->
+<div id="result"></div>
+
+<!-- Cropper.js include -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+<script>
+let cropper;
+document.getElementById("imageInput").addEventListener("change", function(e) {
+    let img = document.getElementById("preview");
+    img.src = URL.createObjectURL(e.target.files[0]);
+    img.style.display = "block";
+
+    if (cropper) cropper.destroy();  // reset old cropper
+    cropper = new Cropper(img, {
+        aspectRatio: 1, // square thumbnail
+        viewMode: 1
+    });
+});
+
+// Form submit
+document.getElementById("thumbForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    if (!cropper) return alert("Select an image first!");
+
+    cropper.getCroppedCanvas({
+        width: 150,
+        height: 150
+    }).toBlob(function(blob) {
+        let formData = new FormData();
+        formData.append("image", blob, "thumbnail.png");
+
+        fetch("/thumbnail", { method: "POST", body: formData })
+        .then(res => res.text())
+        .then(html => { document.getElementById("result").innerHTML = html; });
+    });
+});
+</script>

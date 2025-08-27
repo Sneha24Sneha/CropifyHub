@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crop Image</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet"/>
+  <style>
+    img { max-width: 100%; }
+    .preview { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h2>Upload and Crop Image</h2>
+  
+  <form id="cropForm" method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" id="imageInput" required>
+    <input type="hidden" name="x" id="x">
+    <input type="hidden" name="y" id="y">
+    <input type="hidden" name="width" id="width">
+    <input type="hidden" name="height" id="height">
+    <button type="submit">Crop & Download</button>
+  </form>
+
+  <div class="preview">
+    <img id="imagePreview">
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+  <script>
+    let cropper;
+    const imageInput = document.getElementById("imageInput");
+    const imagePreview = document.getElementById("imagePreview");
+
+    imageInput.addEventListener("change", function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          imagePreview.src = event.target.result;
+          if (cropper) cropper.destroy();
+          cropper = new Cropper(imagePreview, {
+            aspectRatio: NaN, // free crop
+            viewMode: 1,
+            autoCropArea: 0.5,
+            crop(event) {
+              document.getElementById("x").value = event.detail.x;
+              document.getElementById("y").value = event.detail.y;
+              document.getElementById("width").value = event.detail.width;
+              document.getElementById("height").value = event.detail.height;
+            }
+          });
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+</body>
+</html>
