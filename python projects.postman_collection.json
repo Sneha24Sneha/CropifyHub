@@ -1,0 +1,47 @@
+{
+	"info": {
+		"_postman_id": "441db001-1a07-42c5-857a-b5f3a0890952",
+		"name": "python projects",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2287068"
+	},
+	"item": [
+		{
+			"name": "http://localhost:5000/compress",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "quality",
+							"value": "20",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/HP/Pictures/iceland/1.-Gullfoss-Waterfall-Iceland-Cover-1.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/compress",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"compress"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
