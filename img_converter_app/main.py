@@ -1,9 +1,7 @@
 from app import create_app
 from config import DevelopmentConfig, ProductionConfig
-from flask_cors import CORS
 
 app = create_app(DevelopmentConfig)
-CORS(app)
 
 #CORS(app, resources={r"/*": {"origins": ["https://yourfrontend.com"]}})
 

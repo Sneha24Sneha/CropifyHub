@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from app.routes import register_routes
 from app.utils import setup_logger, InvalidImageException
+from flask_cors import CORS
 import os
 
 logger = setup_logger()
@@ -10,6 +11,14 @@ def create_app(config_class):
     app.logger = logger
 
     app.config.from_object(config_class)
+
+    # Enable CORS globally (adjust origins as needed)
+    CORS(app, resources={r"/*": {"origins": "*"}})
+
+    # Recomanded for production
+    # CORS(app, resources={
+    #     r"/api/*": {"origins": ["https://yourfrontend.com", "https://admin.yourfrontend.com"]}
+    # })
 
     app.config["UPLOAD_FOLDER"] = os.path.join(os.getcwd(), "uploads")
     os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
