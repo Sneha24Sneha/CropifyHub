@@ -3,8 +3,6 @@ from config import DevelopmentConfig, ProductionConfig
 
 app = create_app(DevelopmentConfig)
 
-#CORS(app, resources={r"/*": {"origins": ["https://yourfrontend.com"]}})
-
 if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
