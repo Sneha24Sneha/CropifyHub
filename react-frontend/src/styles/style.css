@@ -1,0 +1,53 @@
+/* 
+
+/* --- Global Styles --- */
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f7f7f7;
+}
+
+/* Crop/Resize/Thumbnail preview styles */
+.preview img { max-width: 100%; border: 1px solid #ccc; margin-top: 20px; }
+button.btn { padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+
+/* --- Index Page Specific Styles --- */
+body {
+    background: linear-gradient(to right, #6dd5ed, #2193b0);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.title {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #fff;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+}
+
+.option-card {
+    border-radius: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.option-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.3);
+}
+
+.option-card h4 {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #2193b0;
+}
+
+.option-card p {
+    font-size: 14px;
+    color: #555;
+}
