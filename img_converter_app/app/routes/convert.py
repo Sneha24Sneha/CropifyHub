@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import Blueprint, request, jsonify
 from werkzeug.utils import secure_filename
 from app.utils import save_image, image_to_base64, InvalidImageException
 
@@ -13,7 +13,6 @@ def init_app(app):
 
             file = request.files['image']
             fmt = request.form.get('format', '').upper()
-
             if fmt == 'JPG':
                 fmt = 'JPEG'
 

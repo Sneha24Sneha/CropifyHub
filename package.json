@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "cropperjs": "^1.5.13",
+    "react-cropper": "^2.3.0"
+  }
+}
