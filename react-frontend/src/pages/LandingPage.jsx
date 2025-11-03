@@ -5,7 +5,7 @@ import "../styles/style.css";
 
 function LandingPage() {
   return (
-    <div className="container">
+    <div className="container-fluid">
       <h1 className="title text-center mt-4">Image Converter Tool</h1>
       <div className="row g-4 justify-content-center mt-4">
         <div className="col-md-4">
