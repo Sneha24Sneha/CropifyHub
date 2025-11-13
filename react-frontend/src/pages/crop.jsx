@@ -1,23 +1,29 @@
 import React, { useRef, useState } from "react";
 import { Cropper } from "react-cropper";
+import LoadingBar from "react-top-loading-bar";
+import "cropperjs/dist/cropper.css";
 
 function Crop() {
   const cropperRef = useRef(null);
+  const loaderRef = useRef(null);
+
   const [imageSrc, setImageSrc] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
 
+  // 🔹 Handle file input
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
     reader.onload = () => {
-      setCroppedImage(null); // reset old result
+      setCroppedImage(null);
       setImageSrc(reader.result);
     };
     reader.readAsDataURL(file);
   };
 
+  // 🔹 Crop & upload
   const handleCrop = async (e) => {
     e.preventDefault();
     const cropper = cropperRef.current?.cropper;
@@ -37,23 +43,58 @@ function Crop() {
     formData.append("height", data.height);
 
     try {
+      loaderRef.current?.continuousStart();
+
       const res = await fetch("http://localhost:5000/api/crop", {
         method: "POST",
         body: formData,
       });
 
       const result = await res.json();
-      if (result.error) throw new Error(result.error);
+
+      if (!res.ok || !result.success) {
+        throw new Error(result.error || "Crop failed");
+      }
 
       setCroppedImage(`data:image/png;base64,${result.image_base64}`);
+      setImageSrc(null); // hide cropper after upload
     } catch (err) {
       console.error(err);
       alert("Cropping failed: " + err.message);
+    } finally {
+      loaderRef.current?.complete();
+    }
+  };
+
+  // 🔹 Download cropped image
+  const handleDownload = () => {
+    if (!croppedImage) return;
+
+    try {
+      const arr = croppedImage.split(",");
+      const mime = arr[0].match(/:(.*?);/)[1];
+      const bstr = atob(arr[1]);
+      let n = bstr.length;
+      const u8arr = new Uint8Array(n);
+      while (n--) u8arr[n] = bstr.charCodeAt(n);
+      const blob = new Blob([u8arr], { type: mime });
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "cropped.png";
+      link.click();
+
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Download failed:", err);
     }
   };
 
   return (
     <>
+      <LoadingBar color="#29d" height={3} ref={loaderRef} />
+
       <div className="container text-center mt-4">
         <h2>Upload and Crop Image</h2>
 
@@ -70,6 +111,7 @@ function Crop() {
           </button>
         </form>
 
+        {/* 🔹 Cropper */}
         {imageSrc && (
           <div className="mt-4">
             <Cropper
@@ -77,16 +119,21 @@ function Crop() {
               src={imageSrc}
               style={{ height: 400, width: "100%" }}
               aspectRatio={NaN}
-              guides={true}
+              guides
               viewMode={1}
               autoCropArea={0.6}
               background={false}
-              responsive={true}
+              responsive
               checkOrientation={false}
+              onInitialized={(instance) => {
+                cropperRef.current = { cropper: instance };
+                console.log("Cropper initialized ✅");
+              }}
             />
           </div>
         )}
 
+        {/* 🔹 Cropped Image */}
         {croppedImage && (
           <div className="mt-4">
             <h4>Cropped Result</h4>
@@ -98,28 +145,7 @@ function Crop() {
             <button
               type="button"
               className="btn btn-success mt-2"
-              onClick={() => {
-                try {
-                  const arr = croppedImage.split(',');
-                  const mime = arr[0].match(/:(.*?);/)[1];
-                  const bstr = atob(arr[1]);
-                  let n = bstr.length;
-                  const u8arr = new Uint8Array(n);
-                  while (n--) u8arr[n] = bstr.charCodeAt(n);
-                  const blob = new Blob([u8arr], { type: mime });
-
-                  const url = URL.createObjectURL(blob);
-                  const link = document.createElement("a");
-                  link.href = url;
-                  link.download = "cropped.png";
-                  document.body.appendChild(link);
-                  link.click();
-                  document.body.removeChild(link);
-                  URL.revokeObjectURL(url);
-                } catch (err) {
-                  console.error("Download failed:", err);
-                }
-              }}
+              onClick={handleDownload}
             >
               Download
             </button>
