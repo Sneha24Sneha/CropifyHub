@@ -1,7 +1,5 @@
 import React, { useState, useRef } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Cropper from "cropperjs";
-import "cropperjs/dist/cropper.min.css";
 
 function BatchProcessor() {
   const [files, setFiles] = useState([]);
@@ -74,52 +72,54 @@ function BatchProcessor() {
   };
 
   return (
-    <div className="container mt-4">
-      <h2 className="mb-3 text-center">Batch Image Processor</h2>
+    <>
+      <div className="container mt-4">
+        <h2 className="mb-3 text-center">Batch Image Processor</h2>
 
-      <input
-        type="file"
-        multiple
-        accept="image/*"
-        className="form-control mb-3"
-        onChange={handleFileChange}
-      />
-
-      <div className="text-center">
-        <img
-          ref={imgRef}
-          id="image"
-          alt="Preview"
-          style={{ maxWidth: "400px", border: "1px solid #ccc" }}
+        <input
+          type="file"
+          multiple
+          accept="image/*"
+          className="form-control mb-3"
+          onChange={handleFileChange}
         />
-      </div>
 
-      {files.length > 0 && (
-        <div className="mt-3 text-center">
-          <select
-            value={format}
-            onChange={(e) => setFormat(e.target.value)}
-            className="form-select w-auto d-inline-block me-2"
-          >
-            <option value="PNG">PNG</option>
-            <option value="JPEG">JPEG</option>
-            <option value="WEBP">WEBP</option>
-          </select>
-
-          <button className="btn btn-secondary me-2" onClick={prevImage}>
-            Previous
-          </button>
-          <button className="btn btn-primary me-2" onClick={nextImage}>
-            Next
-          </button>
-          <button className="btn btn-success" onClick={finishProcessing}>
-            Finish
-          </button>
+        <div className="text-center">
+          <img
+            ref={imgRef}
+            id="image"
+            alt="Preview"
+            style={{ maxWidth: "400px", border: "1px solid #ccc" }}
+          />
         </div>
-      )}
 
-      <div id="summary" className="mt-4"></div>
-    </div>
+        {files.length > 0 && (
+          <div className="mt-3 text-center">
+            <select
+              value={format}
+              onChange={(e) => setFormat(e.target.value)}
+              className="form-select w-auto d-inline-block me-2"
+            >
+              <option value="PNG">PNG</option>
+              <option value="JPEG">JPEG</option>
+              <option value="WEBP">WEBP</option>
+            </select>
+
+            <button className="btn btn-secondary me-2" onClick={prevImage}>
+              Previous
+            </button>
+            <button className="btn btn-primary me-2" onClick={nextImage}>
+              Next
+            </button>
+            <button className="btn btn-success" onClick={finishProcessing}>
+              Finish
+            </button>
+          </div>
+        )}
+
+        <div id="summary" className="mt-4"></div>
+      </div>
+    </>
   );
 }
 

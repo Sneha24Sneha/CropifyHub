@@ -51,7 +51,7 @@ export default function Thumbnail() {
   };
 
   return (
-    <div className="container py-5">
+    <>
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div className="card shadow-lg border-0 rounded-4">
@@ -95,6 +95,7 @@ export default function Thumbnail() {
           </div>
         </div>
       </div>
-    </div>
+    </>
+
   );
 }

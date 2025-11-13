@@ -1,11 +1,9 @@
 import React from "react";
-// import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-import "../styles/style.css";
 
 function LandingPage() {
   return (
-    <div className="container-fluid">
+    <>
       <h1 className="title text-center mt-4">Image Converter Tool</h1>
       <div className="row g-4 justify-content-center mt-4">
         <div className="col-md-4">
@@ -49,7 +47,7 @@ function LandingPage() {
           </a>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
