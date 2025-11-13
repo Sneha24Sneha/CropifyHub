@@ -5,7 +5,7 @@ A full-stack web application for performing common image processing operations �
 Built using "Python (Flask)" for the backend, "React.js" for the frontend, and "Docker" for easy deployment.
 
 ## 📷 Screenshots
-
+![App Screenshot](img-crop-home.png)
 
 ## 🚀 Features
 
