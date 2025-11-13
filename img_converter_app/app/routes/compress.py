@@ -42,12 +42,14 @@ def init_app(app):
             base64_img = image_to_base64(Image.open(img_io), format=fmt)
 
             return jsonify({
+                "status":True, 
+                "message": "Image compressed successfully",
                 "filename": out_name,
                 "image_base64": base64_img
             })
 
         except InvalidImageException as e:
-            return jsonify({"error": str(e)}), 400
+            return jsonify({"status":False, "message": str(e)}), 400
         except Exception:
             app.logger.exception("Image compression failed")
-            return jsonify({"error": "Image compression failed"}), 500
+            return jsonify({"status":False, "message": "Image compression failed"}), 500

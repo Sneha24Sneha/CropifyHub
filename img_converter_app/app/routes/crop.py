@@ -16,17 +16,23 @@ def init_app(app):
             width = int(float(request.form['width']))
             height = int(float(request.form['height']))
 
+            MAX_SIZE = (4096, 4096)
+            
+            if width > MAX_SIZE[0] or height > MAX_SIZE[1]:
+                return jsonify({"status":False, "message": "Crop dimensions exceed maximum allowed size"}), 400
+            
             img, _ = save_image(file, file.filename)
             cropped = img.crop((x, y, x + width, y + height))
             base64_img = image_to_base64(cropped)
 
             return jsonify({
+                "status": True,
                 "filename": f"cropped_{file.filename}",
                 "image_base64": base64_img
             })
 
         except InvalidImageException as e:
-            return jsonify({"error": str(e)}), 400
+            return jsonify({"status":False, "message": str(e)}), 400
         except Exception as e:
             app.logger.exception("Crop failed")
-            return jsonify({"error": "Image crop failed"}), 500
+            return jsonify({"status":False, "message": "Image crop failed"}), 500

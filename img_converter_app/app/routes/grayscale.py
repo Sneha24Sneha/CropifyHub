@@ -21,6 +21,8 @@ def init_app(app):
             img_base64 = image_to_base64(gray)
 
             return jsonify({
+                "status": True,
+                "message": "Image converted to grayscale successfully",
                 "filename": f"grayscale_{file.filename}",
                 "image_base64": img_base64
             })
@@ -29,4 +31,4 @@ def init_app(app):
             raise e  # Handled globally
         except Exception as e:
             logger.exception("Unhandled exception in grayscale_image")
-            return jsonify({"error": "Internal Server Error"}), 500
+            return jsonify({"status":False,"message": "Internal Server Error"}), 500

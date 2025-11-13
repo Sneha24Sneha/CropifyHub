@@ -29,12 +29,14 @@ def init_app(app):
             base64_img = image_to_base64(img, format=fmt)
 
             return jsonify({
+                "status":True, 
+                "message": "Image converted successfully",
                 "filename": out_name,
                 "image_base64": base64_img
             })
 
         except InvalidImageException as e:
-            return jsonify({"error": str(e)}), 400
+            return jsonify({"status":False, "message": str(e)}), 400
         except Exception as e:
             app.logger.exception("Image conversion failed")
-            return jsonify({"error": "Image conversion failed"}), 500
+            return jsonify({"status":False, "message": "Image conversion failed"}), 500

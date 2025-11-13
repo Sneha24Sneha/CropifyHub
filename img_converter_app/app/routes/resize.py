@@ -17,6 +17,8 @@ def init_app(app):
             base64_img = image_to_base64(resized)
 
             return jsonify({
+                "status":True, 
+                "message": "Image resized successfully",
                 "filename": f"resized_{file.filename}",
                 "image_base64": base64_img
             })
@@ -25,4 +27,4 @@ def init_app(app):
             raise e
         except Exception as e:
             app.logger.exception("Resize failed")
-            return jsonify({"error": "Image resize failed"}), 500
+            return jsonify({"status":False, "message": "Image resize failed"}), 500

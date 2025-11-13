@@ -26,9 +26,9 @@ function TopLoader() {
 
   return (
     <LoadingBar
-      color="rgba(196, 116, 31, 1)"        // customize the color here
+      color="rgba(196, 31, 31, 1)"        // customize the color here
       ref={ref}
-      height={3}          // height of the line
+      height={4}          // height of the line
       shadow={false}      // disable shadow
     />
   );

@@ -18,12 +18,14 @@ def init_app(app):
             base64_img = image_to_base64(img)
 
             return jsonify({
+                "status":True, 
+                "message": "Thumbnail created successfully",
                 "filename": f"thumb_{file.filename}",
                 "image_base64": base64_img
             })
 
         except InvalidImageException as e:
-            return jsonify({"error": str(e)}), 400
+            return jsonify({"status":False, "message": str(e)}), 400
         except Exception as e:
             app.logger.exception("Thumbnail creation failed")
-            return jsonify({"error": "Thumbnail creation failed"}), 500
+            return jsonify({"status":False, "message": "Thumbnail creation failed"}), 500

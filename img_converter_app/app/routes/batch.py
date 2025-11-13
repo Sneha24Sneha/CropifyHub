@@ -19,6 +19,8 @@ def init_app(app):
                 
                 base64_img = image_to_base64(img)
                 results.append({
+                    "status":True, 
+                    "message": "Batch processing successful",
                     "filename": file.filename,
                     "image_base64": base64_img,
                     "format": fmt
@@ -27,7 +29,7 @@ def init_app(app):
             return jsonify({"results": results})
 
         except InvalidImageException as e:
-            return jsonify({"error": str(e)}), 400
+            return jsonify({"status":False, "message": str(e)}), 400
         except Exception as e:
             app.logger.exception("Batch processing failed")
-            return jsonify({"error": "Batch processing failed"}), 500
+            return jsonify({"status":False, "message": "Batch processing failed"}), 500
