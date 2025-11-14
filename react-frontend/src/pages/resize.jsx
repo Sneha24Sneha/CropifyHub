@@ -30,13 +30,13 @@ export default function Resize() {
     setError("");
 
     try {
-      const response = await axios.post("http://127.0.0.1:5000/api/resize", formData, {
+      const response = await axios.post(`${import.meta.env.REACT_APP_WEBSITE_BACKEND_URL}/api/resize`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      // ✅ Set preview and download link
+      // Set preview and download link
       setConvertedImage(`data:image/jpeg;base64,${response.data.image_base64}`);
-      setDownloadUrl(`http://127.0.0.1:5000${response.data.download_url}`);
+      setDownloadUrl(`${import.meta.env.REACT_APP_WEBSITE_BACKEND_URL}${response.data.download_url}`);
     } catch (err) {
       console.error(err);
       if (err.response && err.response.data.error) setError(err.response.data.error);

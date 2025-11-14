@@ -45,7 +45,7 @@ function Crop() {
     try {
       loaderRef.current?.continuousStart();
 
-      const res = await fetch("http://localhost:5000/api/crop", {
+      const res = await fetch(`${import.meta.env.REACT_APP_WEBSITE_BACKEND_URL}/api/crop`, {
         method: "POST",
         body: formData,
       });

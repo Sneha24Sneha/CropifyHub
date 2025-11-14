@@ -32,15 +32,15 @@ export default function Thumbnail() {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:5000/api/thumbnail",
+        `${import.meta.env.REACT_APP_WEBSITE_BACKEND_URL}/api/thumbnail`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
 
       const { download_url } = response.data;
 
-      setThumbnail(`http://127.0.0.1:5000${download_url}`); // preview ke liye
-      setDownloadUrl(`http://127.0.0.1:5000${download_url}`); // download ke liye
+      setThumbnail(`${import.meta.env.REACT_APP_WEBSITE_BACKEND_URL}${download_url}`); // preview ke liye
+      setDownloadUrl(`${import.meta.env.REACT_APP_WEBSITE_BACKEND_URL}${download_url}`); // download ke liye
     } catch (err) {
       console.error(err);
       if (err.response && err.response.data.error) setError(err.response.data.error);
