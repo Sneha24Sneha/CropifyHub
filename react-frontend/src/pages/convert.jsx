@@ -27,7 +27,7 @@ export default function Convert() {
     setError("");
 
     try {
-      const response = await axios.post(`${import.meta.env.REACT_APP_WEBSITE_BACKEND_URL}/api/convert`, formData, {
+      const response = await axios.post(`${import.meta.env.VITE_APP_WEBSITE_BACKEND_URL}/api/convert`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

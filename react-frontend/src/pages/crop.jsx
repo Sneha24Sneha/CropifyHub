@@ -45,14 +45,14 @@ function Crop() {
     try {
       loaderRef.current?.continuousStart();
 
-      const res = await fetch(`${import.meta.env.REACT_APP_WEBSITE_BACKEND_URL}/api/crop`, {
+      const res = await fetch(`${import.meta.env.VITE_APP_WEBSITE_BACKEND_URL}/api/crop`, {
         method: "POST",
         body: formData,
       });
 
       const result = await res.json();
 
-      if (!res.ok || !result.success) {
+      if (result.status===false) {
         throw new Error(result.error || "Crop failed");
       }
 

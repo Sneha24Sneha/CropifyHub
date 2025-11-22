@@ -35,7 +35,8 @@ function TopLoader() {
 }
 
 function App() {
-  const basenameUrl = import.meta.env.REACT_APP_PUBLIC_URL || "/";
+  const basenameUrl = import.meta.env.VITE_APP_PUBLIC_URL || "/";
+  console.log("Basename URL:", basenameUrl);
 
   return (
     <Router basename={basenameUrl}>

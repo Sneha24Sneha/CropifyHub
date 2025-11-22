@@ -33,15 +33,15 @@ export default function Grayscale() {
 
         try {
             const response = await axios.post(
-                `${import.meta.env.REACT_APP_WEBSITE_BACKEND_URL}/api/grayscale`,
+                `${import.meta.env.VITE_APP_WEBSITE_BACKEND_URL}/api/grayscale`,
                 formData,
                 { headers: { "Content-Type": "multipart/form-data" } }
             );
 
             const { download_url } = response.data;
 
-            setThumbnail(`${import.meta.env.REACT_APP_WEBSITE_BACKEND_URL}${download_url}`); // preview ke liye
-            setDownloadUrl(`${import.meta.env.REACT_APP_WEBSITE_BACKEND_URL}${download_url}`); // download ke liye
+            setThumbnail(`${import.meta.env.VITE_APP_WEBSITE_BACKEND_URL}${download_url}`); // preview ke liye
+            setDownloadUrl(`${import.meta.env.VITE_APP_WEBSITE_BACKEND_URL}${download_url}`); // download ke liye
         } catch (err) {
             console.error(err);
             if (err.response && err.response.data.error) setError(err.response.data.error);
